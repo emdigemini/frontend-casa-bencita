@@ -1,0 +1,59 @@
+@import './variables';
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  background: var(--bg-nav);
+  backdrop-filter: blur(20px);
+  z-index: 999;
+  transition: .3s;
+  color: var(--text-casa);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+
+  span {
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    font-size: 1.8em;
+    cursor: pointer;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    & button {
+      border: none;
+      font-weight: 900;
+      font-size: 0.9em;
+      cursor: pointer;
+      background: none;
+      color: var(--text-nav);
+
+      &:hover {
+        color: lighten($lime, 12%);
+      }
+    }
+  }
+
+  button {
+    color: $white;
+    border: none;
+    background: none;
+    background: $lime;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 800;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

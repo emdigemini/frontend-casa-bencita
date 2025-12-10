@@ -1,0 +1,116 @@
+#reviews {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #fafffd,
+    #f7fffc,
+    #f2fffa,
+    #f1fffa,
+    #f0fffa,
+    #eafff7
+  );
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+
+    h1 {
+      font-size: 3rem;
+    } p {
+      font-size: 18px;
+      color: #3c3c3c;
+    }
+
+    .counts {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+
+      img {
+        height: 25px;
+      }
+
+      p {
+        font-weight: 700;
+        color: $black;
+        font-size: 24px;
+      }
+
+      span {
+        color: #666;
+      }
+    }
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      width: 90%;
+      max-width: 1200px;
+      margin: 30px auto;
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        border-radius: 20px;
+        padding: 20px;
+
+        .info-header {
+          display: flex;
+          justify-content: space-between;
+
+          .name {
+            font-weight: 700;
+            font-size: 18px;
+          }
+
+          .date {
+            font-size: 14px;
+            color: #666;
+          }
+
+          .stars {
+            height: 15px;
+
+            img {
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    button {
+      display: flex;
+      gap: 6px;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 16px;
+      color: #666;
+      cursor: pointer;
+      background: rgba($lime, 0.5);
+      color: rgba(darken($lime, 26%), 0.5);
+
+      &:hover {
+        background: rgba($lime, 0.8);
+      }
+    }
+  }
+}

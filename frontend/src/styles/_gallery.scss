@@ -1,0 +1,155 @@
+#gallery {
+  min-height: 100vh;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px;
+  gap: 10px;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    h1 {
+      font-size: 3rem;
+
+      span {
+        color: darken($lime, 7%);
+      }
+    }
+
+    p {
+      min-width: 450px;
+      width: 40%;
+      font-size: 18px;
+      text-align: center;
+      color: #262626;
+    }
+
+    nav {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+
+      button {
+        font-size: 15px;
+        border: none;
+        color: $lime;
+        cursor: pointer;
+        padding: 10px 24px;
+        border-radius: 50px;
+        border: 1px solid $lime;
+        font-weight: 600;
+        background: none;
+
+        &:hover {
+          color: $white;
+          background: $lime;
+        }
+      }
+      .active {
+        color: $white;
+        background: $lime;
+      }
+    }
+  }
+
+  .img-container {
+    position: relative;
+    margin: 10px 0 20px;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    max-height: 900px;
+    height: auto;
+    width: 1200px;
+    gap: 20px;
+    overflow-y: scroll;
+
+    
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $lime;
+      border-radius: 10px;
+    }
+
+    .prev-img {
+      height: 250px;
+      width: 250px;
+      border-radius: 20px;
+      transition: .3s ease;
+      overflow: hidden;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+      }
+    }
+
+    button {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      font-size: 20px;
+      border: none;
+      background: rgba(0,0,0,0.35);
+      color: $white;
+      border-radius: 50px;
+      padding: 10px;
+
+      &:hover {
+        background: rgba(0,0,0,0.25);
+      }
+    }
+
+    #left {
+      left: -50px;
+      top: 50%;
+    } #right {
+      right: -85px;
+      top: 50%;
+    }
+  }
+
+  .preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+    z-index: 999;
+
+    .img-container {
+      height: 900px;
+      overflow: hidden;
+
+      img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 8px;
+        object-fit: contain;
+      }
+    }
+  }
+}
