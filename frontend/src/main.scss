@@ -47,3 +47,22 @@ body::-webkit-scrollbar-thumb {
   height: auto;
   width: 100vw;
 }
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  width: 100%;
+
+  h1 {
+    font-size: 3rem;
+    color: $black;
+  } p {
+    font-size: 18px;
+    min-width: 450px;
+    width: 40%;
+    color: #262626;
+  }
+}

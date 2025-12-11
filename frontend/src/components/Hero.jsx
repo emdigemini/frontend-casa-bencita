@@ -17,7 +17,7 @@ function Hero(){
         setIndex(prev => (prev + 1) % img.length);
         setFade(true);
       }, 100);
-    }, 4500);
+    }, 4100);
 
     return () => clearInterval(slideShow);
   }, []);

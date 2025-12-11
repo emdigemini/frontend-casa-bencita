@@ -1,10 +1,12 @@
 function About(){
   return (
     <div id="about">
-      <h1>Welcome to Casa Bencita</h1>
-      <p>
-        Casa Bencita is a peaceful retreat surrounded by rice fields and nature, perfect for families, couples, and solo travelers seeking tranquility and connection with the natural world.
-      </p>
+      <div className="header">
+        <h1>Welcome to <span>Casa Bencita</span></h1>
+        <p>
+          Casa Bencita is a peaceful retreat surrounded by rice fields and nature, perfect for families, couples, and solo travelers seeking tranquility and connection with the natural world.
+        </p>
+      </div>
       <div className="main-content">
         <div className="text-content">
           <h3>A Serene Escape from the City</h3>

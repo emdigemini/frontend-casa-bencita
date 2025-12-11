@@ -35,8 +35,8 @@ function Header(){
   const navLinks = [
     { name: 'About', id: 'about' },
     { name: 'Amenities', id: 'amenities' },
-    { name: 'Reviews', id: 'reviews' },
     { name: 'Gallery', id: 'gallery' },
+    { name: 'Reviews', id: 'reviews' },
     { name: 'Location', id: 'location' },
     { name: 'Contact', id: 'contact' },
   ]

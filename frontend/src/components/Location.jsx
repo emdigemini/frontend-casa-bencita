@@ -1,8 +1,10 @@
 function Location(){
   return (
     <div id="location">
-      <h1>Find Us</h1>
-      <p>Located in the heart of Tanay, Rizal, surrounded by nature.</p>
+      <div className="header">
+        <h1>Find Us</h1>
+        <p>Located in the heart of Tanay, Rizal, surrounded by nature.</p>
+      </div>
       <div className="google-map">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3862.6738046705404!2d121.29783807603822!3d14.503405779447002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397eb00475cc3af%3A0x3c1544b71c5a8b6e!2sCasa%20Bencita!5e0!3m2!1sen!2sph!4v1765284884912!5m2!1sen!2sph" width="600" height="450" style={{border: "0"}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
         <div className="text-content">

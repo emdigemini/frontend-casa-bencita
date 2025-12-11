@@ -16,16 +16,9 @@
   );
 
   .header {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
 
-    h1 {
-      font-size: 3rem;
-    } p {
-      font-size: 18px;
-      color: #3c3c3c;
+    p {
+      min-width: 10px !important;
     }
 
     .counts {
@@ -45,6 +38,7 @@
       }
 
       span {
+        width: 100%;
         color: #666;
       }
     }
