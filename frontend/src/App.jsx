@@ -6,6 +6,8 @@ import Amenities from './components/Amenities'
 import Gallery from './components/Gallery'
 import Reviews from './components/Reviews'
 import Location from './components/Location'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Gallery />
       <Reviews />
       <Location />
+      <Contact />
+      <Footer />
     </>
   )
 }

@@ -25,7 +25,6 @@ function Header(){
   }, [scrollY])
 
   const navTo = (id) => {
-    console.log(id);
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ block: 'center' });
@@ -33,13 +32,15 @@ function Header(){
   }
 
   const navLinks = [
+    { name: 'Home', id: 'hero' },
     { name: 'About', id: 'about' },
     { name: 'Amenities', id: 'amenities' },
     { name: 'Gallery', id: 'gallery' },
     { name: 'Reviews', id: 'reviews' },
     { name: 'Location', id: 'location' },
     { name: 'Contact', id: 'contact' },
-  ]
+  ];
+
   return (
     <header>
       <span onClick={() => navTo('hero')}>

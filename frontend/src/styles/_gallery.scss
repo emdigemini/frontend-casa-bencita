@@ -123,13 +123,14 @@
     z-index: 999;
 
     .img-container {
+      display: flex;
+      justify-content: center;
       height: 900px;
       overflow: hidden;
 
       img {
         max-width: 90%;
         max-height: 90%;
-        border-radius: 8px;
         object-fit: contain;
       }
     }
