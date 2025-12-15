@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">.
+  <title>Calendar</title>
+  <style>
+    body {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .calendar {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      width: 350px;
+      border: 1px solid black;
+      }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid black;
+      padding: 10px;
+    }
+    .header .month-year {
+      display: flex;
+      align-items: center;
+    }
+    .header button {
+      cursor: pointer;
+    }
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      padding: 10px 0;
+      text-align: center;
+      cursor: default;
+    } 
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      text-align: center;
+    }
+    .day {
+      padding: 10px 0;
+      cursor: pointer;
+      color: black;
+    }
+    .day:hover {
+      background: #cdcdcd;
+    }
+    .day.other-month {
+      color: #909090;
+    }
+  </style>
+</head>
+<body>
+  <div class="calendar">
+    <div class="header">
+      <button onclick="prevMonth()">
+        prev
+      </button>
+      <div class="month-year">January 2025</div>
+      <button onclick="forwardMonth()">
+        forward
+      </button>
+    </div>
+    <div class="weekdays">
+      <div>Sun</div>
+      <div>Mon</div>
+      <div>Tue</div>
+      <div>Wed</div>
+      <div>Thu</div>
+      <div>Fri</div>
+      <div>Sat</div>
+    </div>
+    <div class="days"></div>
+  </div>
+
+<script>
+  
+  let nav = 0;
+
+  function forwardMonth(){
+    nav++;
+    renderDate(nav);
+  }
+
+  function prevMonth(){
+    nav--;
+    renderDate(nav);
+  }
+
+  renderDate(nav);
+  function renderDate(nav){
+    const monthYear = document.querySelector('.month-year');
+    const days = document.querySelector('.days');
+
+    let currentDate = new Date();
+    currentDate.setMonth(new Date().getMonth() + nav);
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const day = currentDate.getDate();
+
+
+    const months = ["January", "February", "March", "April", "May", "June", 
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const lastDay = new Date(year, month - 1, 0).getDate();
+    days.innerHTML = '';
+
+    for(let i = firstDay - 1; i >= 0; i--){
+      days.innerHTML += `
+        <div class="day other-month">${lastDay - i}</div> 
+      `
+    }
+
+    for(let day = 1; day <= daysInMonth; day++){
+      days.innerHTML += `
+        <div class="day">${day}</div> 
+      `
+    }
+
+    monthYear.innerText = `${months[month]} ${year}`
+  }
+
+
+</script>
+</body>
+</html>
