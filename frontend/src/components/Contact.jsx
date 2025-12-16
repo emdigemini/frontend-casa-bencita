@@ -41,11 +41,11 @@ function SendMessage(){
       <p>Contact Us Directly</p>
       <div className="contact-us">
         <i className="bi bi-telephone"></i>
-        +63 912 345 6789
+        +63 939 666 3374
       </div>
       <div className="contact-us">
         <i className="bi bi-envelope"></i>
-        casabencita@gmail.com
+        78hiraya@gmail.com
       </div>
       <div className="contact-us">
         <i className="bi bi-geo-alt"></i>

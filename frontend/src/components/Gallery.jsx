@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 function Gallery(){
   const [ nav, setNav ] = useState([
     {name: 'All', id: 'all', active: true},
+    {name: 'Videos', id: 'videos', active: false},
     {name: 'Rooms', id: 'rooms', active: false},
     {name: 'Exterior', id: 'exterior', active: false},
     {name: 'Amenities', id: 'amenities', active: false},
@@ -44,63 +45,90 @@ function Gallery(){
 
 function CardContent({ filter }) {
   const [ previewSrc, setPreviewSrc ] = useState(null);
+  const currentVid = useRef(null);
+
   const photos = [
-    {id: 'rooms', img: '/bedroom/room-6.avif'},
-    {id: 'rooms', img: '/bedroom/room-2.avif'},
-    {id: 'rooms', img: '/bedroom/room-3.avif'},
-    {id: 'rooms', img: '/bedroom/room-4.avif'},
-    {id: 'rooms', img: '/bedroom/room-5.jpeg'},
-    {id: 'rooms', img: '/bedroom/room-8.avif'},
-    {id: 'rooms', img: '/bedroom/room-00.avif'},
-    {id: 'rooms', img: '/bedroom/room-01.avif'},
-    {id: 'rooms', img: '/bathroom/bathroom-0.avif'},
-    {id: 'rooms', img: '/bathroom/bathroom-1.avif'},
-    {id: 'rooms', img: '/bathroom/bathroom-2.jpeg'},
-    {id: 'rooms', img: '/bathroom/bathroom-3.avif'},
+    /* Videos */
+    {id: 'videos', file:'/videos/video-0.mp4'},
+    {id: 'videos', file:'/videos/video-1.mp4'},
+    {id: 'videos', file:'/videos/video-2.mp4'},
+    /* Rooms */
+    {id: 'rooms', file: '/bedroom/room-6.avif'},
+    {id: 'rooms', file: '/bedroom/room-2.avif'},
+    {id: 'rooms', file: '/bedroom/room-3.avif'},
+    {id: 'rooms', file: '/bedroom/room-4.avif'},
+    {id: 'rooms', file: '/bedroom/room-5.jpeg'},
+    {id: 'rooms', file: '/bedroom/room-8.avif'},
+    {id: 'rooms', file: '/bedroom/room-00.avif'},
+    {id: 'rooms', file: '/bedroom/room-01.avif'},
+    {id: 'rooms', file: '/bathroom/bathroom-0.avif'},
+    {id: 'rooms', file: '/bathroom/bathroom-1.avif'},
+    {id: 'rooms', file: '/bathroom/bathroom-2.jpeg'},
+    {id: 'rooms', file: '/bathroom/bathroom-3.avif'},
     /* Exterior */
-    {id: 'exterior', img: '/exterior/exterior0.avif'},
-    {id: 'exterior', img: '/exterior/exterior1.avif'},
-    {id: 'exterior', img: '/exterior/exterior2.avif'},
-    {id: 'exterior', img: '/exterior/exterior3.avif'},
-    {id: 'exterior', img: '/exterior/exterior4.avif'},
-    {id: 'exterior', img: '/exterior/exterior5.avif'},
-    {id: 'exterior', img: '/exterior/exterior6.avif'},
+    {id: 'exterior', file: '/exterior/exterior0.avif'},
+    {id: 'exterior', file: '/exterior/exterior1.avif'},
+    {id: 'exterior', file: '/exterior/exterior2.avif'},
+    {id: 'exterior', file: '/exterior/exterior3.avif'},
+    {id: 'exterior', file: '/exterior/exterior4.avif'},
+    {id: 'exterior', file: '/exterior/exterior5.avif'},
+    {id: 'exterior', file: '/exterior/exterior6.avif'},
     /* Amenities */
-    {id: 'amenities', img: '/amenities/amenities0.avif'},
-    {id: 'amenities', img: '/amenities/amenities1.avif'},
-    {id: 'amenities', img: '/amenities/amenities2.avif'},
-    {id: 'amenities', img: '/amenities/amenities3.avif'},
-    {id: 'amenities', img: '/amenities/amenities4.avif'},
-    {id: 'amenities', img: '/amenities/amenities5.avif'},
-    {id: 'amenities', img: '/amenities/amenities6.avif'},
-    {id: 'amenities', img: '/amenities/amenities7.avif'},
-    {id: 'amenities', img: '/amenities/amenities8.avif'},
-    {id: 'amenities', img: '/amenities/amenities9.avif'},
-    {id: 'amenities', img: '/amenities/amenities10.avif'},
-    {id: 'amenities', img: '/amenities/amenities11.avif'},
-    {id: 'amenities', img: '/amenities/amenities12.avif'},
-    {id: 'amenities', img: '/amenities/amenities13.avif'},
+    {id: 'amenities', file: '/amenities/amenities0.avif'},
+    {id: 'amenities', file: '/amenities/amenities1.avif'},
+    {id: 'amenities', file: '/amenities/amenities2.avif'},
+    {id: 'amenities', file: '/amenities/amenities3.avif'},
+    {id: 'amenities', file: '/amenities/amenities4.avif'},
+    {id: 'amenities', file: '/amenities/amenities5.avif'},
+    {id: 'amenities', file: '/amenities/amenities6.avif'},
+    {id: 'amenities', file: '/amenities/amenities7.avif'},
+    {id: 'amenities', file: '/amenities/amenities8.avif'},
+    {id: 'amenities', file: '/amenities/amenities9.avif'},
+    {id: 'amenities', file: '/amenities/amenities10.avif'},
+    {id: 'amenities', file: '/amenities/amenities11.avif'},
+    {id: 'amenities', file: '/amenities/amenities12.avif'},
+    {id: 'amenities', file: '/amenities/amenities13.avif'},
   ];
 
   const filteredPhotos = photos.filter(p => p.id === filter || filter === 'all');
 
+  const playVid = (vid) => {
+    if(currentVid.current && currentVid.current !== vid){
+      currentVid.current.pause();
+    } 
+    currentVid.current = vid;
+  }
+
   return (
     <>
-      <div className="img-container">
+      <div className="file-container">
         {filteredPhotos.map((p, i) => (
-          <div
-            key={i}
-            className="prev-img"
-            onClick={() => setPreviewSrc(p.img)}
-          >
-            <img src={p.img} alt={p.id} />
-          </div>
+          <Fragment key={`${p.file}-${i}`}>
+          {p.id === 'videos' 
+              ? 
+              <div
+                key={`${p.file}-${i}`} 
+                onPlay={(e) => playVid(e.target)}
+                className="prev-video"
+              >
+                <video ref={currentVid} src={p.file}
+                controls></video>
+              </div>
+              :
+              <div
+                className="prev-img"
+                onClick={() => setPreviewSrc(p.file)}
+              >
+              <img src={p.file} alt={p.id} />
+            </div>
+            }
+          </Fragment>
         ))}
       </div>
 
     {previewSrc && (
       <div className="preview-modal" onClick={() => setPreviewSrc(null)}>
-        <div className="img-container">
+        <div className="file-container">
           <img src={previewSrc} alt="Preview" />
         </div>
       </div>

@@ -23,11 +23,11 @@ function PageLink(){
         Your private nature retreat in Tanay, Rizal. Modern, cozy, and peacefully surrounded by lush greenery.
       </p>
       <div className="page-link">
-        <a href="">
+        <a href="https://www.facebook.com/profile.php?id=61573568433933" target="_blank" >
           <i className="fa-brands fa-facebook-f"></i>
         </a>
-        <a href="">
-          <i className="bi bi-instagram"></i>
+        <a href="https://tiktok.com/@casabencita78" target="_blank">
+          <i className="bi bi-tiktok"></i>
         </a>
       </div>
     </div>
@@ -75,11 +75,11 @@ function ContactUs(){
       <h2>Contact Us</h2>
       <div className="contact-us">
         <i className="bi bi-telephone"></i>
-        +63 912 345 6789
+        +63 939 666 3374
       </div>
       <div className="contact-us">
         <i className="bi bi-envelope"></i>
-        casabencita@gmail.com
+        78hiraya@gmail.com
       </div>
       <div className="contact-us">
         <i className="bi bi-geo-alt"></i>
