@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { BookingContext } from "../context/BookingContext";
 
 function Hero(){
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(false);
+  const { openBooking } = useContext(BookingContext);
 
   const img = [
     '/image/main-bg.jpg',
@@ -36,7 +38,7 @@ function Hero(){
           Relax, Unwind, and Connect with Nature at Casa Bencita
         </h1>
         <p>Your peaceful retreat in Tanay, Rizal</p>
-        <button>Book Your Stay</button>
+        <button onClick={() => openBooking()}>Book Your Stay</button>
       </div>
       <div className="arrow">
         <i className="bi bi-arrow-down-short"></i>

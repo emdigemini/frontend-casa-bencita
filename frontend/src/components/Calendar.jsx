@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Calendar() {
+export function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const year = currentDate.getFullYear();

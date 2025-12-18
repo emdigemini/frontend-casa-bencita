@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
+import { BookingContext } from "../context/BookingContext";
 
 function Header(){
   const [ scrollY, setScrollY ] = useState(0);
+  const { openBooking } = useContext(BookingContext);
+  const scroll = useRef(null);
 
   useEffect(() => {
     const scrollHandler = () => {
@@ -10,13 +13,9 @@ function Header(){
     }
 
     if (scrollY > 50) {
-      document.documentElement.style.setProperty('--bg-nav', '#fff');
-      document.documentElement.style.setProperty('--text-nav', '#575757ff');
-      document.documentElement.style.setProperty('--text-casa', '#17966e');
+      scroll.current.classList.add('scroll');
     } else {
-      document.documentElement.style.setProperty('--bg-nav', 'rgba(0, 0, 0, 0.25)');
-      document.documentElement.style.setProperty('--text-nav', '#fff');
-      document.documentElement.style.setProperty('--text-casa', '#fff');
+      scroll.current.classList.remove('scroll');
     }
 
     window.addEventListener('scroll', scrollHandler);
@@ -42,7 +41,7 @@ function Header(){
   ];
 
   return (
-    <header>
+    <header ref={scroll}>
       <span onClick={() => navTo('hero')}>
         Casa Bencita
       </span>
@@ -58,7 +57,7 @@ function Header(){
           )
         })}
       </nav>
-      <button>Book Now</button>
+      <button onClick={() => openBooking()}>Book Now</button>
     </header>
   )
 }

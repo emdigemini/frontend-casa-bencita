@@ -1,0 +1,70 @@
+.modal-overlay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100vw;
+  background: rgba($black, 0.5);
+  z-index: 999;
+
+  .booking-box {
+    position: relative;
+    height: 750px;
+    width: 700px;
+    border-radius: 10px;
+    background: $white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 20px;
+
+    &::-webkit-scrollbar {
+      width: 7px;
+      height: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #fff;
+      border-radius: 20px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $lime;
+      border-radius: 20px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
+      font-size: 21px;
+      color: #262626;
+      cursor: pointer;
+
+      &:hover {
+        color: #a9a9a9;
+      }
+    }
+
+    .booking-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px 0 40px;
+
+      h2 {
+        font-weight: 500;
+        color: $black;
+      } p {
+        color: #666;
+        font-size: 14px;
+      }
+    }
+
+
+  }
+
+}
