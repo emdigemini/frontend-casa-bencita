@@ -26,6 +26,7 @@
       align-items: center;
       justify-content: center;
       gap: 4px;
+      width: max-content;
 
       img {
         height: 25px;
@@ -38,7 +39,7 @@
       }
 
       span {
-        width: 100%;
+        display: flex;
         color: #666;
       }
     }

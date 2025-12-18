@@ -6,6 +6,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  width: 100%;
   padding: 20px;
   background: var(--bg-nav);
   backdrop-filter: blur(20px);
@@ -63,6 +64,10 @@ header.scroll {
   nav {
     button {
       color: #575757ff;
+
+      &:hover {
+        color: lighten($lime, 12%);
+      }
     }
   }
 

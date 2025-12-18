@@ -35,7 +35,7 @@
         }
 
         .textbox {
-          border: 1px solid #d4d4d4;
+          border: 1px solid $form_border;
           border-radius: 10px;
           padding: 8px 10px;
           min-height: 200px;
@@ -49,7 +49,7 @@
         input {
           border-radius: 10px;
           border: none;
-          border: 1px solid #d4d4d4;
+          border: 1px solid $form_border;
           padding: 8px 10px;
 
           &:focus {
@@ -76,7 +76,7 @@
 
       hr {
         margin: 25px 0;
-        border: 0.5px solid #d4d4d4;
+        border: 0.5px solid $form_border;
       }
 
       p {
@@ -119,16 +119,18 @@
       }
     }
 
-    .note {
-      margin-top: 15px;
-      background: lighten(rgba($lime, 0.25), 10%);
-      color: #343434;
-      padding: 15px;
-      border-radius: 15px;
+    
+  }
+}
 
-      span {
-        font-weight: 700;
-      }
-    }
+.note {
+  margin-top: 15px;
+  background: lighten(rgba($lime, 0.25), 10%);
+  color: #343434;
+  padding: 15px;
+  border-radius: 15px;
+
+  span {
+    font-weight: 700;
   }
 }

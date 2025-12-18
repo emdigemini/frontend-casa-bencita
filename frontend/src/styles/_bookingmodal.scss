@@ -17,7 +17,6 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    overflow-y: scroll;
     padding: 20px;
 
     &::-webkit-scrollbar {
@@ -53,7 +52,7 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      padding: 20px 0 40px;
+      padding: 20px 0;
 
       h2 {
         font-weight: 500;
@@ -64,7 +63,209 @@
       }
     }
 
+    h3 {
+      font-weight: 600;
+      margin: 15px 0 20px;
+    }
 
+    .input-box {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 10px 0;
+
+      label {
+        font-size: 14px;
+        font-weight: 600;
+      } input {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid $form_border;
+
+        &:focus {
+          outline: none;
+          border: 1px solid $black;
+        }
+      }
+    }
+
+    .buttons {
+      display: flex;
+      margin: 20px 0 ;
+      gap: 10px;
+
+      button {
+        color: $black;
+        border: 1px solid $form_border;
+        border-radius: 8px;
+        padding: 12px 20px;
+        width: 100%;
+        font-weight: 600;
+        background: $white;
+        cursor: pointer;
+
+        &:hover {
+          background: darken($white, 2%);
+        }
+
+        &:nth-child(2) {
+          background: $lime;
+          color: $white;
+          border: none;
+
+          &:hover {
+            background: lighten($lime, 2%);
+          }
+        }
+      }
+    }
+
+    .booking-widget {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .note {
+        align-self: flex-start;
+        font-size: 13px;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 4px;
+        width: 100%;
+      }
+
+      .booking-widget__price {
+        display: flex;
+        align-items: center;
+        align-self: flex-start;
+        gap: 6px;
+        margin-bottom: 10px;
+        font-weight: 500;
+        
+        p {
+          font-size: 15px;
+          text-decoration: none;
+        }
+
+        span {
+          color: $black;
+          font-size: 18px;
+          font-weight: 600;
+          text-decoration: underline;
+        }
+      }
+
+      .booking-widget__date {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: 15px;
+
+        .input-box {
+          width: 100%;
+          gap: 6px;
+
+          .date-select__calendar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 6px;
+            width: 100%;
+            border: 1px solid #d4d4d4;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            user-select: none;
+            cursor: pointer;
+
+            &:hover {
+              background: darken($white, 4%);
+            }
+
+            .calendar-box {
+              position: absolute;
+              top: 42px;
+              left: 0;
+              display: block;
+              box-shadow: 0 0 4px rgba($black, 0.5);
+              border-radius: 6px;
+              z-index: 2;
+
+              .calendar {
+                width: 250px;
+                margin: unset;
+
+                .header {
+                  font-size: 13px;
+
+                  button {
+                    font-size: 12px;
+                  }
+                }
+
+                .days {
+                  gap: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .select-guest {
+      position: relative;
+      border: 1px solid $form_border;
+      border-radius: 6px;
+      font-size: 14px;
+
+      .select-box {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+          background: darken($white, 4%);
+        }
+
+        p {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          i {
+            font-size: 16px;
+          }
+        } 
+      }
+
+      .dropdown-box {
+        position: absolute;
+        background: $white;
+        width: 100%;
+        box-shadow: 0 0 4px rgba($black, 0.5);
+        border-radius: 6px;
+        top: calc(100% + 8px);
+        z-index: 2;
+
+        ul li {
+          display: flex;
+          gap: 6px;
+          align-items: center;
+          border-radius: 6px;
+          padding: 10px;
+          cursor: pointer;
+
+          i {
+            font-size: 16px;
+          }
+
+          &:hover {
+            background: darken($white, 10%);
+          }
+        }        
+      }
+    }
   }
-
 }
