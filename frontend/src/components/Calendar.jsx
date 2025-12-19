@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Calendar() {
+export function Calendar({ updateDate, field }) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const year = currentDate.getFullYear();
@@ -35,7 +35,10 @@ export function Calendar() {
 
   for(let day = 1; day <= daysInMonth; day++){
     days.push(
-      <div key={`current-${day}`} className="day">
+      <div onClick={() => {
+          updateDate(field, new Date(year, month, day));
+        }
+      } key={`current-${day}`} className="day">
         {day}
       </div>
     )

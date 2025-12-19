@@ -6,6 +6,17 @@ function BookingModal(){
   const { closeBooking } = useContext(BookingContext);
   const [ toggleCalendar, setToggleCalendar ] = useState({checkin: false, checkout: false});
   const [ toggleGuest, setToggleGuest ] = useState(false);
+  const [ selectedGuest, setSelectedGuest ] = useState(null);
+  const [ selectedDate, setSelectedDate ] = useState({
+    checkIn: null, checkOut: null
+  });
+
+
+  const updateDate = (field, value) => {
+    setSelectedDate(prev => ({
+      ...prev, [field]: value,
+    }));
+  };
 
   useEffect(() => {
     const originalOverflow = document.body.style.overflowY;
@@ -22,6 +33,17 @@ function BookingModal(){
       closeBooking();
     }
   };
+
+  function transformDate(field){
+    const date = selectedDate[field];
+    console.log(date);
+    if (!date) return null;
+    return date.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
+  }
 
   return (
     <div className="modal-overlay" onClick={handleOverlayClick}>
@@ -41,18 +63,22 @@ function BookingModal(){
             <div className="input-box">
               <label htmlFor="">Check-in Date</label>
               <div onClick={(e) => {setToggleCalendar({...toggleCalendar, checkin: !toggleCalendar.checkin})}} className="date-select__calendar">
-                <i className="bi bi-calendar-week"></i>
-                <p>Select date</p>
-                {toggleCalendar.checkin && <CustomCalendar />}
+                {selectedDate.checkIn 
+                  ? transformDate('checkIn')
+                  : <><i className="bi bi-calendar-week"></i> <p>Select Date</p></>
+                }
+                {toggleCalendar.checkin && <CustomCalendar updateDate={updateDate} field='checkIn' />}
                 
               </div>
             </div>
             <div className="input-box">
               <label htmlFor="">Check-out Date</label>
               <div onClick={(e) => {setToggleCalendar({...toggleCalendar, checkout: !toggleCalendar.checkout})}} className="date-select__calendar">
-                <i className="bi bi-calendar-week"></i>
-                <p>Select date</p>
-                {toggleCalendar.checkout && <CustomCalendar />}
+                {selectedDate.checkOut 
+                  ? transformDate('checkOut')
+                  : <><i className="bi bi-calendar-week"></i> <p>Select Date</p></>
+                }
+                {toggleCalendar.checkout && <CustomCalendar updateDate={updateDate} field='checkOut' />}
               </div>
             </div>
           </div>
@@ -65,12 +91,22 @@ function BookingModal(){
           <div className="select-guest">
             <div onClick={() => setToggleGuest(!toggleGuest)} className="select-box">
               <p>
-                <i className="bi bi-people"></i>
-                1 Guest
+                {selectedGuest 
+                ?
+                <><i className="bi bi-people"></i> {selectedGuest}</>  
+                : 
+                  <><i className="bi bi-people"></i> 1 Guest</>
+                }
+                
               </p>
               <i className="bi bi-chevron-down"></i>
             </div>
-            {toggleGuest && <GuestDropdown />}
+            {toggleGuest && 
+            <GuestDropdown onSelectGuest={(guest) => 
+              {
+                setSelectedGuest(guest);
+                setToggleGuest(false);
+            }} />}
           </div>
         </div>
         <h3>Booking Contact</h3>
@@ -95,24 +131,24 @@ function BookingModal(){
   )
 }
 
-function CustomCalendar(){
+function CustomCalendar({ updateDate, field }){
   return (
     <div onClick={(e) => e.stopPropagation()} className="calendar-box">
-      <Calendar />
+      <Calendar updateDate={updateDate} field={field} />
     </div>
   )
 }
 
-function GuestDropdown(){
+function GuestDropdown({ onSelectGuest }){
   const guests = [
-    {id: 0, icon: 'bi bi-people', guest: '1 Guest'},
-    {id: 1, icon: 'bi bi-people', guest: '2 Guests'},
-    {id: 2, icon: 'bi bi-people', guest: '3 Guests'},
-    {id: 3, icon: 'bi bi-people', guest: '4 Guests'},
-    {id: 4, icon: 'bi bi-people', guest: '5 Guests'},
-    {id: 5, icon: 'bi bi-people', guest: '6 Guests'},
-    {id: 6, icon: 'bi bi-people', guest: '7 Guests'},
-    {id: 7, icon: 'bi bi-people', guest: '8 Guests'},
+    {id: 0, value: 1, guest: '1 Guest'},
+    {id: 1, value: 2, guest: '2 Guests'},
+    {id: 2, value: 3, guest: '3 Guests'},
+    {id: 3, value: 4, guest: '4 Guests'},
+    {id: 4, value: 5, guest: '5 Guests'},
+    {id: 5, value: 6, guest: '6 Guests'},
+    {id: 6, value: 7, guest: '7 Guests'},
+    {id: 7, value: 8, guest: '8 Guests'},
   ]
 
   return (
@@ -120,8 +156,8 @@ function GuestDropdown(){
       <ul>
         {guests.map(g => {
           return (
-            <li key={g.id}>
-              <i className={g.icon}></i>
+            <li onClick={() => onSelectGuest(g.guest)} key={g.id}>
+              <i className="bi bi-people"></i>
               {g.guest}
             </li>
           )

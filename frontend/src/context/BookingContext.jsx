@@ -8,8 +8,12 @@ export function BookingProvider({ children }){
   const openBooking = () => setToggleBooking(true);
   const closeBooking = () => setToggleBooking(false);
 
+  
+
   return (
-    <BookingContext.Provider value={{ toggleBooking, openBooking, closeBooking }}>
+    <BookingContext.Provider value={{
+       toggleBooking, openBooking, closeBooking,
+    }}>
       {children}
     </BookingContext.Provider>
   )
