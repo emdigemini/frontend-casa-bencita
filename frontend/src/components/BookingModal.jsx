@@ -11,7 +11,6 @@ function BookingModal(){
     checkIn: null, checkOut: null
   });
 
-
   const updateDate = (field, value) => {
     setSelectedDate(prev => ({
       ...prev, [field]: value,
@@ -34,7 +33,7 @@ function BookingModal(){
     }
   };
 
-  function transformDate(field){
+  const transformDate = (field) => {
     const date = selectedDate[field];
     console.log(date);
     if (!date) return null;
