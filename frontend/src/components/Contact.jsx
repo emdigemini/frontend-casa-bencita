@@ -1,6 +1,7 @@
 import Calendar from "./Calendar";
 
 function Contact(){
+
   return (
     <div id="contact">
       <div className="header">

@@ -1,15 +1,21 @@
 import Calendar from "./Calendar";
 import { BookingContext } from "../context/BookingContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 function BookingModal(){
-  const { closeBooking } = useContext(BookingContext);
+  const { closeBooking, updateBookingData } = useContext(BookingContext);
   const [ toggleCalendar, setToggleCalendar ] = useState({checkin: false, checkout: false});
   const [ toggleGuest, setToggleGuest ] = useState(false);
-  const [ selectedGuest, setSelectedGuest ] = useState(null);
+  const [ selectedGuest, setSelectedGuest ] = useState({guest: 1, text: '1 Guest'});
   const [ selectedDate, setSelectedDate ] = useState({
     checkIn: null, checkOut: null
   });
+
+  const calendarDropdown = useRef(null);
+  const guestDropdown = useRef(null);
+  const fullNameRef = useRef(null);
+  const emailRef = useRef(null);
+  const phoneRef = useRef(null);
 
   const updateDate = (field, value) => {
     setSelectedDate(prev => ({
@@ -19,11 +25,20 @@ function BookingModal(){
 
   useEffect(() => {
     const originalOverflow = document.body.style.overflowY;
-
     document.documentElement.style.overflowY = 'hidden';
+    const handleDropdown = (e) => {
+      if(!calendarDropdown.current.contains(e.target)){
+        setToggleCalendar({ checkin: false, checkout: false });
+      } if(!guestDropdown.current.contains(e.target)){
+         setToggleGuest(false);
+      }
+        return;
+    }
+    window.addEventListener('click', handleDropdown);
 
     return () => {
       document.documentElement.style.overflowY = originalOverflow;
+      window.removeEventListener('click', handleDropdown);
     };
   }, []);
 
@@ -35,13 +50,24 @@ function BookingModal(){
 
   const transformDate = (field) => {
     const date = selectedDate[field];
-    console.log(date);
     if (!date) return null;
-    return date.toLocaleDateString('en-US', {
+    return new Date(date).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
-    })
+    });
+  }
+
+  const confirmBooking = () => {
+    const paid = false;
+    const price = 0;
+    const checkIn = selectedDate.checkIn;
+    const checkOut = selectedDate.checkOut;
+    const guests = selectedGuest.guest;
+    const fullName = fullNameRef.current.value;
+    const email = emailRef.current.value;
+    const phone = phoneRef.current.value;
+    updateBookingData({paid, price, checkIn, checkOut, guests, fullName, email, phone})
   }
 
   return (
@@ -58,7 +84,7 @@ function BookingModal(){
           <div className="booking-widget__price">
             <span>₱7,000</span> <p>for 1 night</p>
           </div>
-          <div className="booking-widget__date">
+          <div ref={calendarDropdown} className="booking-widget__date">
             <div className="input-box">
               <label htmlFor="">Check-in Date</label>
               <div onClick={(e) => {setToggleCalendar({...toggleCalendar, checkin: !toggleCalendar.checkin})}} className="date-select__calendar">
@@ -87,12 +113,12 @@ function BookingModal(){
         </div>
         <div className="input-box">
           <label htmlFor="">Number of Guests</label>
-          <div className="select-guest">
+          <div ref={guestDropdown} className="select-guest">
             <div onClick={() => setToggleGuest(!toggleGuest)} className="select-box">
               <p>
                 {selectedGuest 
                 ?
-                <><i className="bi bi-people"></i> {selectedGuest}</>  
+                <><i className="bi bi-people"></i> {selectedGuest.text}</>  
                 : 
                   <><i className="bi bi-people"></i> 1 Guest</>
                 }
@@ -111,19 +137,19 @@ function BookingModal(){
         <h3>Booking Contact</h3>
         <div className="input-box">
           <label htmlFor="fullName">Full Name</label>
-          <input type="text" placeholder="Full Name" />
+          <input ref={fullNameRef} id="fullName" type="text" placeholder="Full Name" />
         </div>
         <div className="input-box">
-          <label htmlFor="email">Email</label>
-          <input type="email" placeholder="Email" />
+          <label htmlFor="email0">Email</label>
+          <input ref={emailRef} id="email0" type="email" placeholder="Email" />
         </div>
         <div className="input-box">
-          <label htmlFor="phone">Phone Number</label>
-          <input type="text" placeholder="+63 XXX XXX XXXX" />
+          <label htmlFor="phone0">Phone Number</label>
+          <input ref={phoneRef} id="phone0" type="text" placeholder="+63 XXX XXX XXXX" />
         </div>
         <div className="buttons">
           <button onClick={closeBooking}>Cancel</button>
-          <button>Confirm Booking</button>
+          <button onClick={confirmBooking}>Confirm Booking</button>
         </div>
       </div>
     </div>
@@ -155,7 +181,7 @@ function GuestDropdown({ onSelectGuest }){
       <ul>
         {guests.map(g => {
           return (
-            <li onClick={() => onSelectGuest(g.guest)} key={g.id}>
+            <li onClick={() => onSelectGuest({guest: g.value, text: g.guest})} key={g.id}>
               <i className="bi bi-people"></i>
               {g.guest}
             </li>

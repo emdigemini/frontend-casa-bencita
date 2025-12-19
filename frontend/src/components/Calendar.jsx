@@ -36,7 +36,7 @@ export function Calendar({ updateDate, field }) {
   for(let day = 1; day <= daysInMonth; day++){
     days.push(
       <div onClick={() => {
-          updateDate(field, new Date(year, month, day));
+          updateDate(field, `${year}-${month+1}-${day}`);
         }
       } key={`current-${day}`} className="day">
         {day}
