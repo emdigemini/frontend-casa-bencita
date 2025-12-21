@@ -1,6 +1,7 @@
 import Calendar from "./Calendar";
 import { BookingContext } from "../context/BookingContext";
 import { useContext, useEffect, useRef, useState } from "react";
+import { calculatePrice } from "../utils/money";
 
 function BookingModal(){
   const { closeBooking, updateBookingData } = useContext(BookingContext);
@@ -16,12 +17,6 @@ function BookingModal(){
   const fullNameRef = useRef(null);
   const emailRef = useRef(null);
   const phoneRef = useRef(null);
-
-  const updateDate = (field, value) => {
-    setSelectedDate(prev => ({
-      ...prev, [field]: value,
-    }));
-  };
 
   useEffect(() => {
     const originalOverflow = document.body.style.overflowY;
@@ -48,6 +43,12 @@ function BookingModal(){
     }
   };
 
+  const updateDate = (field, value) => {
+    setSelectedDate(prev => ({
+      ...prev, [field]: value,
+    }));
+  };
+
   const transformDate = (field) => {
     const date = selectedDate[field];
     if (!date) return null;
@@ -56,7 +57,22 @@ function BookingModal(){
       month: 'long',
       year: 'numeric'
     });
-  }
+  };
+
+  const calculateNights = () => {
+    if (!selectedDate.checkIn || !selectedDate.checkOut) return 0;
+
+    const [y1, m1, d1] = selectedDate.checkIn.split('-').map(Number);
+    const [y2, m2, d2] = selectedDate.checkOut.split('-').map(Number);
+
+    const checkInDate = new Date(y1, m1 - 1, d1);
+    const checkOutDate = new Date(y2, m2 - 1, d2);
+
+    const diffTime = checkOutDate - checkInDate;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+    return diffDays;
+  };
 
   const confirmBooking = () => {
     const paid = false;
@@ -82,7 +98,12 @@ function BookingModal(){
         </div>
         <div className="booking-widget">
           <div className="booking-widget__price">
-            <span>₱7,000</span> <p>for 1 night</p>
+            {selectedDate.checkIn && selectedDate.checkOut && 
+              <>
+                <span>₱{calculatePrice(7000, calculateNights())}</span> 
+                <p>for {calculateNights()} night{calculateNights() > 1 ? 's' : ''}</p>
+              </>
+            }
           </div>
           <div ref={calendarDropdown} className="booking-widget__date">
             <div className="input-box">
@@ -92,7 +113,7 @@ function BookingModal(){
                   ? transformDate('checkIn')
                   : <><i className="bi bi-calendar-week"></i> <p>Select Date</p></>
                 }
-                {toggleCalendar.checkin && <CustomCalendar updateDate={updateDate} field='checkIn' />}
+                {toggleCalendar.checkin && <CustomCalendar updateDate={updateDate} checkIn={selectedDate.checkIn} field='checkIn' />}
                 
               </div>
             </div>
@@ -103,7 +124,7 @@ function BookingModal(){
                   ? transformDate('checkOut')
                   : <><i className="bi bi-calendar-week"></i> <p>Select Date</p></>
                 }
-                {toggleCalendar.checkout && <CustomCalendar updateDate={updateDate} field='checkOut' />}
+                {toggleCalendar.checkout && <CustomCalendar updateDate={updateDate} checkIn={selectedDate.checkIn} field='checkOut' />}
               </div>
             </div>
           </div>
@@ -156,10 +177,10 @@ function BookingModal(){
   )
 }
 
-function CustomCalendar({ updateDate, field }){
+function CustomCalendar({ updateDate, checkIn, field }){
   return (
     <div onClick={(e) => e.stopPropagation()} className="calendar-box">
-      <Calendar updateDate={updateDate} field={field} />
+      <Calendar updateDate={updateDate} checkIn={checkIn} field={field} />
     </div>
   )
 }

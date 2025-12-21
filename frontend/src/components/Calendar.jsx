@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Calendar({ updateDate, field }) {
+export function Calendar({ updateDate, checkIn, field }) {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const year = currentDate.getFullYear();
@@ -23,6 +23,18 @@ export function Calendar({ updateDate, field }) {
     setCurrentDate(new Date(year, month + 1, 1));
   };
 
+  const dateGreaterThanToday = (date) => {
+    const today = new Date();
+    return date > today;
+  }
+
+  const formatDate = (date) => {
+    const d = String(date.getDate()).padStart(2, '0');
+    const m = String(date.getMonth()+1).padStart(2, '0');
+    const y = date.getFullYear();
+    return `${y}-${m}-${d}`;
+  }
+
   const days = [];
 
   for(let i = firstDay - 1; i >= 0; i--){
@@ -36,9 +48,22 @@ export function Calendar({ updateDate, field }) {
   for(let day = 1; day <= daysInMonth; day++){
     days.push(
       <div onClick={() => {
-          updateDate(field, `${year}-${month+1}-${day}`);
+        const selectedDate = new Date(year, month, day);
+        const nextDate = new Date(selectedDate);
+        nextDate.setDate(selectedDate.getDate() + 1);
+
+        if(!dateGreaterThanToday(new Date(year, month, day))) return;
+          if(field === 'checkIn'){
+            updateDate('checkIn', `${year}-${month+1}-${day}`);
+            updateDate('checkOut', `${formatDate(nextDate)}`);
+          } else if(field === 'checkOut'){
+            const selectedCheckOut = `${year}-${month+1}-${day}`;
+            if(selectedCheckOut <= checkIn){
+              return;
+            } updateDate('checkOut', selectedCheckOut);
+          }
         }
-      } key={`current-${day}`} className="day">
+      } key={`current-${day}`} className={`day ${dateGreaterThanToday(new Date(year, month, day)) ? '' : 'other-month'}`}>
         {day}
       </div>
     )
