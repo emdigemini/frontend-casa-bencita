@@ -107,5 +107,29 @@
         background: rgba($lime, 0.8);
       }
     }
+
+    a {
+      color: $lime;
+      text-align: center;
+      margin-top: 20px;
+    }
+  }
+
+  .modal-overlay {
+    @include fullscreen-overlay(rgba($black, 0.5), 1000);
+
+    .write-review-box {
+      position: relative;
+      background: $white;
+      border-radius: 10px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+      .close-btn {
+        @include close-btn; 
+      }
+    }
   }
 }

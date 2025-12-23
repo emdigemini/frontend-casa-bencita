@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 function Reviews(){
+  const [ toggleWriteReviewModal, setToggleWriteReviewModal ] = useState(false);
+
   const reviews = [
     {
       name: 'Queenie Castle',
@@ -55,12 +59,35 @@ function Reviews(){
             )
           })}
         </div>
-        <button>
+        <button onClick={() => setToggleWriteReviewModal(true)}>
           <i className="bi bi-pen"></i>
           Write a review
         </button>
+        <a href="">View all reviews</a>
+      </div>
+
+      {toggleWriteReviewModal && <WriteReviewModal setToggleWriteReviewModal={setToggleWriteReviewModal} /> }
+    </div>
+  )
+}
+
+function WriteReviewModal({ setToggleWriteReviewModal }){
+  return (
+    <div className="modal-overlay">
+      <div className="write-review-box">
+        <div onClick={() => setToggleWriteReviewModal(false)} className="close-btn">
+          <i className="bi bi-x"></i>
+        </div>
       </div>
     </div>
+  )
+}
+
+function ReviewsBox(){
+  return (
+    <>
+      <p>hi</p>
+    </>
   )
 }
 

@@ -128,9 +128,9 @@ function BookingModal(){
               </div>
             </div>
           </div>
-          <div className="note">
-            <span>Note:</span> Dates shown in green are already booked. Please select available dates for your stay.
-          </div>
+          <p className="note">
+            <b>Note:</b> Dates shown in green are already booked. Please select available dates for your stay.
+          </p>
         </div>
         <div className="input-box">
           <label htmlFor="">Number of Guests</label>
@@ -154,6 +154,7 @@ function BookingModal(){
                 setToggleGuest(false);
             }} />}
           </div>
+          <p className="house-rule">A maximum of <b>8 guests</b> is allowed. If you have any pets, please inform the owner.</p>
         </div>
         <h3>Booking Contact</h3>
         <div className="input-box">

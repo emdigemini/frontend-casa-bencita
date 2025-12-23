@@ -1,16 +1,11 @@
 .modal-overlay {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100vw;
-  background: rgba($black, 0.5);
-  z-index: 999;
-
+  @include fullscreen-overlay(rgba($black, 0.5), 1000);
+  
   .booking-box {
     position: relative;
-    height: 750px;
+    max-height: 900px;
+    height: max-content;
+    justify-content: center;
     width: 700px;
     border-radius: 10px;
     background: $white;
@@ -35,17 +30,7 @@
     }
 
     .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 9999;
-      font-size: 21px;
-      color: #262626;
-      cursor: pointer;
-
-      &:hover {
-        color: #a9a9a9;
-      }
+      @include close-btn;
     }
 
     .booking-header {
@@ -268,5 +253,15 @@
         }        
       }
     }
+
+    .house-rule {
+      background: rgba(#ff6e6e, 0.5);
+      color: #343434;
+      font-size: 13px;
+      padding: 10px;
+      border-radius: 6px;
+      width: 100%;
+    }
   }
 }
+

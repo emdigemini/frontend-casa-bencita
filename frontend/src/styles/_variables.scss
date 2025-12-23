@@ -10,3 +10,29 @@ $lime: #17966e;
 $lime_border: 2px solid lighten(rgba($lime, 0.3), 20%);
 $navy_blue: #111827;
 $form_border: #d4d4d4;
+
+@mixin fullscreen-overlay ($bg: rgba($black, 0.5), $z: 999) {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  height: 100%;
+  width: 100vw;
+  background: $bg;
+  z-index: $z;
+}
+
+@mixin close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+  z-index: 9999;
+
+  &:hover {
+    color: #a9a9a9;
+  }
+}
