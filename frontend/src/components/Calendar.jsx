@@ -57,6 +57,7 @@ export function Calendar({ updateDate, checkIn, field }) {
             updateDate('checkIn', `${year}-${month+1}-${day}`);
             updateDate('checkOut', `${formatDate(nextDate)}`);
           } else if(field === 'checkOut'){
+            if(!checkIn) return;
             const selectedCheckOut = `${year}-${month+1}-${day}`;
             if(selectedCheckOut <= checkIn){
               return;

@@ -9,11 +9,11 @@ import Reviews from './components/Reviews'
 import Location from './components/Location'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import BookingModal from './components/BookingModal'
+import { BookingModal, SubmitSuccessful } from './components/BookingModal'
 import { BookingContext } from './context/BookingContext'
 
 function App() {
-  const { toggleBooking } = useContext(BookingContext);
+  const { toggleBooking, successSubmit } = useContext(BookingContext);
 
   return (
     <>
@@ -26,6 +26,7 @@ function App() {
       <Location />
       <Contact />
       <Footer />
+      {successSubmit && <SubmitSuccessful /> }
       {toggleBooking && <BookingModal />}
     </>
   )

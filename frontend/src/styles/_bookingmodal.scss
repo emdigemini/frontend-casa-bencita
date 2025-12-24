@@ -79,6 +79,11 @@
       margin: 20px 0 ;
       gap: 10px;
 
+      .submitting {
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
       button {
         color: $black;
         border: 1px solid $form_border;

@@ -8,8 +8,8 @@ function Header(){
 
   useEffect(() => {
     const scrollHandler = () => {
-      const scroll = window.scrollY;
-      setScrollY(scroll);
+      const scroll_y = window.scrollY;
+      setScrollY(scroll_y);
     }
 
     if (scrollY > 50) {

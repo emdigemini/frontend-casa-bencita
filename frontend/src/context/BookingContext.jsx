@@ -4,6 +4,7 @@ export const BookingContext = createContext();
 
 export function BookingProvider({ children }){
   const [ toggleBooking, setToggleBooking ] = useState(false);
+  const [ successSubmit, setSuccessSubmit ] = useState(false);
   const [ bookingData, setBookingData ] = useState(
     [
       {
@@ -54,12 +55,13 @@ export function BookingProvider({ children }){
   const closeBooking = () => setToggleBooking(false);
   const updateBookingData = (value) => {
     setBookingData(prev => [...prev, {...value, id: prev.length ? prev.at(-1).id + 1 : 1 }]);
+    console.log(bookingData);
   }
 
   return (
     <BookingContext.Provider value={{
        toggleBooking, openBooking, closeBooking,
-       bookingData, updateBookingData
+       bookingData, updateBookingData, successSubmit, setSuccessSubmit
     }}>
       {children}
     </BookingContext.Provider>

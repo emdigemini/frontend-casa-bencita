@@ -3,20 +3,22 @@ import { BookingContext } from "../context/BookingContext";
 import { useContext, useEffect, useRef, useState } from "react";
 import { calculatePrice } from "../utils/money";
 
-function BookingModal(){
-  const { closeBooking, updateBookingData } = useContext(BookingContext);
+export function BookingModal(){
+  const { closeBooking, updateBookingData, successSubmit, setSuccessSubmit } = useContext(BookingContext);
   const [ toggleCalendar, setToggleCalendar ] = useState({checkin: false, checkout: false});
   const [ toggleGuest, setToggleGuest ] = useState(false);
   const [ selectedGuest, setSelectedGuest ] = useState({guest: 1, text: '1 Guest'});
   const [ selectedDate, setSelectedDate ] = useState({
     checkIn: null, checkOut: null
   });
+  const [ totalPrice, setTotalPrice ] = useState(0);
 
   const calendarDropdown = useRef(null);
   const guestDropdown = useRef(null);
   const fullNameRef = useRef(null);
   const emailRef = useRef(null);
   const phoneRef = useRef(null);
+  const confirmRef = useRef(null);  
 
   useEffect(() => {
     const originalOverflow = document.body.style.overflowY;
@@ -36,6 +38,12 @@ function BookingModal(){
       window.removeEventListener('click', handleDropdown);
     };
   }, []);
+
+  useEffect(() => {
+    const nights = calculateNights();
+    const totalPrice = calculatePrice(7000, nights);
+    setTotalPrice(totalPrice);
+  }, [selectedDate]);
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -59,7 +67,7 @@ function BookingModal(){
     });
   };
 
-  const calculateNights = () => {
+  function calculateNights(){
     if (!selectedDate.checkIn || !selectedDate.checkOut) return 0;
 
     const [y1, m1, d1] = selectedDate.checkIn.split('-').map(Number);
@@ -75,15 +83,33 @@ function BookingModal(){
   };
 
   const confirmBooking = () => {
-    const paid = false;
-    const price = 0;
-    const checkIn = selectedDate.checkIn;
-    const checkOut = selectedDate.checkOut;
-    const guests = selectedGuest.guest;
-    const fullName = fullNameRef.current.value;
-    const email = emailRef.current.value;
-    const phone = phoneRef.current.value;
-    updateBookingData({paid, price, checkIn, checkOut, guests, fullName, email, phone})
+    let paid = false;
+    let price = totalPrice;
+    let checkIn = new Date(selectedDate.checkIn);
+    let checkOut = new Date(selectedDate.checkOut);
+    let guests = selectedGuest.guest;
+    let fullName = fullNameRef.current.value;
+    let email = emailRef.current.value;
+    let phone = phoneRef.current.value;
+      if(!checkIn || !checkOut || !fullName || !email || !phone){
+        alert('Please fill in all the required fields.');
+        return;
+      }
+
+      confirmRef.current.classList.add('submitting');
+      confirmRef.current.innerText = 'Submitting...';
+
+      setTimeout(() => { 
+        updateBookingData({paid, price, checkIn, checkOut, guests, fullName, email, phone});
+        setSelectedDate({checkIn: null, checkOut: null});
+        setSelectedGuest({guest: 1, text: '1 Guest'});
+        fullNameRef.current.value = '';
+        emailRef.current.value = '';
+        phoneRef.current.value = '';
+        confirmRef.current.classList.remove('submitting');
+        confirmRef.current.innerText = 'Confirm Booking';
+        setSuccessSubmit(true);
+       }, 1200);
   }
 
   return (
@@ -100,7 +126,7 @@ function BookingModal(){
           <div className="booking-widget__price">
             {selectedDate.checkIn && selectedDate.checkOut && 
               <>
-                <span>₱{calculatePrice(7000, calculateNights())}</span> 
+                <span>₱{totalPrice}</span> 
                 <p>for {calculateNights()} night{calculateNights() > 1 ? 's' : ''}</p>
               </>
             }
@@ -171,9 +197,35 @@ function BookingModal(){
         </div>
         <div className="buttons">
           <button onClick={closeBooking}>Cancel</button>
-          <button onClick={confirmBooking}>Confirm Booking</button>
+          <button ref={confirmRef} onClick={confirmBooking}>Confirm Booking</button>
         </div>
       </div>
+    </div>
+  )
+}
+
+export function SubmitSuccessful(){
+  const { successSubmit, setSuccessSubmit } = useContext(BookingContext);
+  const submittedRef = useRef(null);
+
+  useEffect(() => {
+    if(successSubmit){
+      const timer = setTimeout(() => {
+        submittedRef.current.classList.add('close');
+        submittedRef.current.addEventListener('animationend', () => {
+          setSuccessSubmit(false);
+          submittedRef.current.classList.remove('close');
+        });
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [successSubmit]);
+
+  return (
+    <div ref={submittedRef} className="submit-successful">
+      <i className="bi bi-check-circle-fill"></i>
+      <p>Booking request submitted! We'll confirm your reservation shortly. </p>
     </div>
   )
 }
@@ -213,5 +265,3 @@ function GuestDropdown({ onSelectGuest }){
     </div>
   )
 }
-
-export default BookingModal;
