@@ -75,6 +75,16 @@
         color: #9b9b9b;
       }
 
+      &.other-month.booked {
+        color: #9b9b9b;
+        background: rgba($lime, 0.2);
+      }
+
+      &.booked {
+        color: $white;
+        background: lighten($lime, 5%);
+      }
+
       &.today {
         background: #4da3ff;
         color: #000;

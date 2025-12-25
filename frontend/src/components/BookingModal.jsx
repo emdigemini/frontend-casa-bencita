@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { calculatePrice } from "../utils/money";
 
 export function BookingModal(){
-  const { closeBooking, updateBookingData, successSubmit, setSuccessSubmit } = useContext(BookingContext);
+  const { closeBooking, updateBookingData, successSubmit, setSuccessSubmit, bookingData } = useContext(BookingContext);
   const [ toggleCalendar, setToggleCalendar ] = useState({checkin: false, checkout: false});
   const [ toggleGuest, setToggleGuest ] = useState(false);
   const [ selectedGuest, setSelectedGuest ] = useState({guest: 1, text: '1 Guest'});
@@ -83,10 +83,11 @@ export function BookingModal(){
   };
 
   const confirmBooking = () => {
+    console.log(bookingData);
     let paid = false;
     let price = totalPrice;
-    let checkIn = new Date(selectedDate.checkIn);
-    let checkOut = new Date(selectedDate.checkOut);
+    let checkIn = selectedDate.checkIn;
+    let checkOut = selectedDate.checkOut;
     let guests = selectedGuest.guest;
     let fullName = fullNameRef.current.value;
     let email = emailRef.current.value;
