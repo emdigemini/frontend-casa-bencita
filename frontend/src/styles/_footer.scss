@@ -14,8 +14,8 @@
   }
   
   h3 {
-    font-size: 1.3rem;
-    color: $white;
+    font-weight: 600;
+    color: darken($white, 10%);
     min-width: 450px;
     max-width: 900px;
     line-height: 1.3;
