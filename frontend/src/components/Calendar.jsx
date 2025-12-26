@@ -44,8 +44,9 @@ export function Calendar({ updateDate, checkIn, field }) {
     const nextDate = new Date(selectedDate);
     nextDate.setDate(selectedDate.getDate() + 1);
 
-    if(isDateBooked(selectedDate)) return;
     if(!dateGreaterThanToday(new Date(year, month, day))) return;
+    if(isDateBooked(selectedDate)) return;
+    if(isDateBooked(nextDate)) return;
 
     if(field === 'checkIn'){
       updateDate('checkIn', formatDate(selectedDate));

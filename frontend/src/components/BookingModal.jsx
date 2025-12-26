@@ -109,7 +109,7 @@ export function BookingModal(){
         phoneRef.current.value = '';
         confirmRef.current.classList.remove('submitting');
         confirmRef.current.innerText = 'Confirm Booking';
-        setSuccessSubmit(true);
+        setSuccessSubmit(true)
        }, 1200);
   }
 
