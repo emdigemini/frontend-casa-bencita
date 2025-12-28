@@ -72,14 +72,75 @@ function Reviews(){
 }
 
 function WriteReviewModal({ setToggleWriteReviewModal }){
+
+  const autoResize = (e) => {
+    e.target.style.height = 'auto';
+    e.target.style.height = `${e.target.scrollHeight}px`;
+  };
+
   return (
     <div className="modal-overlay">
-      <div className="write-review-box">
+      <div className="review-box">
         <div onClick={() => setToggleWriteReviewModal(false)} className="close-btn">
           <i className="bi bi-x"></i>
         </div>
+        <h2>Write a Review</h2>
+        <div className="input-box">
+          <label htmlFor="name">Full Name *</label>
+          <input id="name" type="text" />
+        </div>
+        <div className="input-box">
+          <label htmlFor="email">Email *</label>
+          <input id="email" type="text" />
+        </div>
+        <div className="input-box">
+          <label htmlFor="writeReview">Review *</label>
+          <div className="write-review-box">
+            <textarea name="" id="writeReview"
+              onInput={autoResize}
+            >
+              {/* Text Here */}
+            </textarea>
+          </div>
+          <div className="action-button">
+            <SendButton />
+            <AddPhoto />
+          </div>
+        </div>
       </div>
     </div>
+  )
+}
+
+function SendButton(){
+  return (
+    <button className="send-btn">
+      Post Review
+    </button>
+  )
+}
+
+function AddPhoto(){
+  const plusStyle = () => {
+    return {
+      position: 'absolute',
+      inset: '0px 0px 0px 0px',
+      top: '3px',
+      fontSize: '12px',
+    }
+  }
+
+  return (
+    <button className="add-media-btn">
+      <i className="bi bi-plus"
+        style={plusStyle()}
+      ></i>
+      <i className="bi bi-collection" 
+        style={{
+          fontSize: '18px'
+        }}
+      ></i>
+    </button>
   )
 }
 
