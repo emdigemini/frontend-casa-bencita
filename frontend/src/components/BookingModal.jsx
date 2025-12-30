@@ -83,7 +83,6 @@ export function BookingModal(){
   };
 
   const confirmBooking = () => {
-    console.log(bookingData);
     let paid = false;
     let price = totalPrice;
     let checkIn = selectedDate.checkIn;

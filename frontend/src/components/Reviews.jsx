@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function Reviews(){
   const [ toggleWriteReviewModal, setToggleWriteReviewModal ] = useState(false);
@@ -66,47 +66,58 @@ function Reviews(){
         <a href="">View all reviews</a>
       </div>
 
-      {toggleWriteReviewModal && <WriteReviewModal setToggleWriteReviewModal={setToggleWriteReviewModal} /> }
+      {toggleWriteReviewModal && <WriteReviewModal toggleWriteReviewModal={toggleWriteReviewModal} setToggleWriteReviewModal={setToggleWriteReviewModal} /> }
     </div>
   )
 }
 
-function WriteReviewModal({ setToggleWriteReviewModal }){
-
+function WriteReviewModal({ toggleWriteReviewModal, setToggleWriteReviewModal }){
   const autoResize = (e) => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="review-box">
+    <div className="modal-overlay"
+      onClick={() => setToggleWriteReviewModal(false)}
+    >
+      <div className="review-box"
+        onClick={e => e.stopPropagation()}
+      >
         <div onClick={() => setToggleWriteReviewModal(false)} className="close-btn">
           <i className="bi bi-x"></i>
         </div>
         <h2>Write a Review</h2>
-        <div className="input-box">
-          <label htmlFor="name">Full Name *</label>
-          <input id="name" type="text" />
-        </div>
-        <div className="input-box">
-          <label htmlFor="email">Email *</label>
-          <input id="email" type="text" />
-        </div>
-        <div className="input-box">
-          <label htmlFor="writeReview">Review *</label>
-          <div className="write-review-box">
-            <textarea name="" id="writeReview"
-              onInput={autoResize}
-            >
-              {/* Text Here */}
-            </textarea>
+        <form action="">
+          <div className="input-box">
+            <label htmlFor="name">Full Name *</label>
+            <input id="name" type="text" required />
           </div>
-          <div className="action-button">
-            <SendButton />
+          <div className="input-box">
+            <label htmlFor="email">Email *</label>
+            <input id="email" type="text" required />
+          </div>
+          <div className="input-box">
+            <label htmlFor="writeReview">Review *</label>
+            <div className="write-review-box">
+              <textarea name="" id="writeReview"
+                onInput={autoResize}
+              >
+                {/* Text Here */}
+              </textarea>
+              <div className="prev-media">
+                <img src="/bedroom/room-0.avif" alt="" draggable={false} />
+                <img src="/bedroom/room-1.avif" alt="" draggable={false} />
+                <img src="/bedroom/room-2.avif" alt="" draggable={false} />
+                <img src="/bedroom/room-3.avif" alt="" draggable={false} />
+                <img src="/bedroom/room-4.avif" alt="" draggable={false} />
+              </div>
+            </div>
             <AddPhoto />
+            <StarButton />
+            <SendButton />
           </div>
-        </div>
+        </form>
       </div>
     </div>
   )
@@ -114,9 +125,37 @@ function WriteReviewModal({ setToggleWriteReviewModal }){
 
 function SendButton(){
   return (
-    <button className="send-btn">
+    <button type="submit" className="send-btn">
       Post Review
     </button>
+  )
+}
+
+function StarButton(){
+  const [starsArray, setStarsArray] = useState([
+    { id: 1, select: false },
+    { id: 2, select: false },
+    { id: 3, select: false },
+    { id: 4, select: false },
+    { id: 5, select: false },
+  ]);
+
+
+  const selectStar = (id) => {
+    setStarsArray(prev =>
+      prev.map(star => ({
+        ...star,
+        select: star.id <= id,
+      }))
+    );
+  }
+
+  return (
+    <div className="star-button">
+      {starsArray.map((star) => (
+        <i key={star.id} onClick={() => selectStar(star.id)} className={`bi bi-star${star.select ? '-fill' : ''}`}></i>
+      ))}
+    </div>
   )
 }
 
@@ -124,14 +163,15 @@ function AddPhoto(){
   const plusStyle = () => {
     return {
       position: 'absolute',
-      inset: '0px 0px 0px 0px',
-      top: '3px',
+      top: '4px',
+      right: '3px',
       fontSize: '12px',
     }
   }
 
   return (
-    <button className="add-media-btn">
+    <div className="add-media-btn">
+      <p>Add Media</p>
       <i className="bi bi-plus"
         style={plusStyle()}
       ></i>
@@ -140,7 +180,7 @@ function AddPhoto(){
           fontSize: '18px'
         }}
       ></i>
-    </button>
+    </div>
   )
 }
 

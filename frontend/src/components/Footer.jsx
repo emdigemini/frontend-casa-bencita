@@ -14,8 +14,8 @@ function PreFooter(){
       <h1>Ready for Your Private Escape?</h1>
       <h3>Experience the perfect blend of nature and comfort at Casa Bencita. Book your stay today and create unforgettable memories.</h3>
       <div className="pre-footer__buttons">
-        <button onClick={() => openBooking()}><i class="bi bi-telephone"></i> Book Your Stay</button>
-        <button onClick={() => scrollToContact()}><i class="bi bi-envelope"></i> Email Us</button>
+        <button onClick={() => openBooking()}><i className="bi bi-telephone"></i> Book Your Stay</button>
+        <button onClick={() => scrollToContact()}><i className="bi bi-envelope"></i> Email Us</button>
       </div>
     </div>
   )
