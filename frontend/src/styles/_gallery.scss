@@ -85,10 +85,10 @@
     } 
     
     .prev-video {
-      flex: 1 1 auto;
+      flex: 1 1 300px;
       height: 250px;
-      background: rgba($black, 0.2);
-      max-width: 500px;
+      background: $black;
+      min-width: 150px;
       border-radius: 20px;
       overflow: hidden;
 
@@ -96,6 +96,15 @@
         width: 100%;
         height: 100%;
         cursor: pointer;
+
+        &::-webkit-media-controls {
+          opacity: 0.4;
+          transition: .3s ease;
+        }
+
+         &:hover::-webkit-media-controls {
+          opacity: 1;
+        }
       }
     }
 
