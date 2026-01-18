@@ -1,5 +1,5 @@
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -9,11 +9,11 @@ import Reviews from './components/Reviews'
 import Location from './components/Location'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import { BookingModal, SubmitSuccessful } from './components/BookingModal'
+import { BookingModal } from './components/BookingModal'
 import { BookingContext } from './context/BookingContext'
 
 function App() {
-  const { toggleBooking, successSubmit } = useContext(BookingContext);
+  const { toggleBooking } = useContext(BookingContext);
 
   return (
     <>
@@ -26,7 +26,6 @@ function App() {
       <Location />
       <Contact />
       <Footer />
-      {successSubmit && <SubmitSuccessful /> }
       {toggleBooking && <BookingModal />}
     </>
   )

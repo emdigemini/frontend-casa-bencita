@@ -2,9 +2,10 @@ import Calendar from "./Calendar";
 import { BookingContext } from "../context/BookingContext";
 import { useContext, useEffect, useRef, useState } from "react";
 import { calculatePrice } from "../utils/money";
+import toast from "react-hot-toast";
 
 export function BookingModal(){
-  const { closeBooking, updateBookingData, setSuccessSubmit, bookingData } = useContext(BookingContext);
+  const { closeBooking, updateBookingData } = useContext(BookingContext);
   const [ toggleCalendar, setToggleCalendar ] = useState({checkin: false, checkout: false});
   const [ toggleGuest, setToggleGuest ] = useState(false);
   const [ selectedGuest, setSelectedGuest ] = useState({guest: 1, text: '1 Guest'});
@@ -92,7 +93,7 @@ export function BookingModal(){
     let email = emailRef.current.value;
     let phone = phoneRef.current.value;
       if(!checkIn || !checkOut || !fullName || !email || !phone){
-        alert('Please fill in all the required fields.');
+        toast.error("Please fill in all the required fields.")
         return;
       }
 
@@ -108,7 +109,7 @@ export function BookingModal(){
         phoneRef.current.value = '';
         confirmRef.current.classList.remove('submitting');
         confirmRef.current.innerText = 'Confirm Booking';
-        setSuccessSubmit(true)
+        toast.success("Booking request submitted! We'll confirm your reservation shortly.");
        }, 1200);
   }
 
@@ -200,32 +201,6 @@ export function BookingModal(){
           <button ref={confirmRef} onClick={confirmBooking}>Confirm Booking</button>
         </div>
       </div>
-    </div>
-  )
-}
-
-export function SubmitSuccessful(){
-  const { successSubmit, setSuccessSubmit } = useContext(BookingContext);
-  const submittedRef = useRef(null);
-
-  useEffect(() => {
-    if(successSubmit){
-      const timer = setTimeout(() => {
-        submittedRef.current.classList.add('close');
-        submittedRef.current.addEventListener('animationend', () => {
-          setSuccessSubmit(false);
-          submittedRef.current.classList.remove('close');
-        });
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [successSubmit]);
-
-  return (
-    <div ref={submittedRef} className="submit-successful">
-      <i className="bi bi-check-circle-fill"></i>
-      <p>Booking request submitted! We'll confirm your reservation shortly. </p>
     </div>
   )
 }
